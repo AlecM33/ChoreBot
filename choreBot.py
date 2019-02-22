@@ -61,9 +61,9 @@ def constructChoreMessage(todays_people, member_dict):
 
 # calculates the correct loci based on the length of todays nicknames and the length of the chore strings
 def constructMentionsObject(todays_people):
-    mention_index1 = len(intro_string) + len(dishwasher_string)
-    mention_index2 = mention_index1 + len(member_dict.get(todays_people[0])) + len(countertop_string)
-    mention_index3 = mention_index2 + len(member_dict.get(todays_people[1])) + len(stovetop_string)
+    mention_index1 = len(intro_string) + len(dishwasher_string) - 1
+    mention_index2 = mention_index1 + len(member_dict.get(todays_people[0])) + len(countertop_string) - 1
+    mention_index3 = mention_index2 + len(member_dict.get(todays_people[1])) + len(stovetop_string) - 1
     firstLoci = [mention_index1, len(member_dict.get(todays_people[0]))]
     secondLoci = [mention_index2, len(member_dict.get(todays_people[1]))]
     thirdLoci = [mention_index3, len(member_dict.get(todays_people[2]))]
