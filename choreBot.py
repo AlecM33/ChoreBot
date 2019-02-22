@@ -66,9 +66,9 @@ def constructMentionsObject(todays_people):
     mention_index1 = len(intro_string) + len(dishwasher_string)
     mention_index2 = mention_index1 + len(member_dict.get(todays_people[0])) + len(countertop_string)
     mention_index3 = mention_index2 + len(member_dict.get(todays_people[1])) + len(stovetop_string)
-    firstLoci = [mention_index1 - 1, len(member_dict.get(todays_people[0]))]
-    secondLoci = [mention_index2 - 1, len(member_dict.get(todays_people[1]))]
-    thirdLoci = [mention_index3 - 1, len(member_dict.get(todays_people[2]))]
+    firstLoci = [mention_index1 - 1, len(member_dict.get(todays_people[0])) + 1]
+    secondLoci = [mention_index2 - 1, len(member_dict.get(todays_people[1])) + 1]
+    thirdLoci = [mention_index3 - 1, len(member_dict.get(todays_people[2])) + 1]
     return {'loci': [firstLoci, secondLoci, thirdLoci], 'type': 'mentions', 'user_ids': [str(todays_people[0]), \
      str(todays_people[1]), str(todays_people[2])]}
 
