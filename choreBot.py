@@ -7,7 +7,8 @@ import datetime
 ### IMPORTANT VARIABLES AND CONSTANTS ###
 group_id = '34883130'
 access_token = '7bC53ZymUUULq74uIlnYHJ3WExGkGJMevOXGitY3'
-bot_id = '66937b801033770130013711b2'
+#bot_id = '66937b801033770130013711b2'
+bot_id = '08a9497a271a70057028cd3b55'
 todays_people = None
 current_week = None
 choreMapping = numpy.zeros((3,7), int)
@@ -24,10 +25,10 @@ request_url = 'https://api.groupme.com/v3/groups/' + group_id
 homies_group_info = requests.get(request_url, params = request_params).json()
 response = int(homies_group_info['meta']['code'])
 # sets nicknames to most recent set
-if(response < 400):
-    the_homies = homies_group_info['response']['members']
-    for homie in the_homies:
-        member_dict[homie['user_id']] = homie['nickname']
+#if(response < 400):
+the_homies = homies_group_info['response']['members']
+for homie in the_homies:
+    member_dict[homie['user_id']] = homie['nickname']
 
 # request for bot test group, remove once migrated
 #group = requests.get('https://api.groupme.com/v3/groups/48409659', params = request_params).json()
@@ -62,12 +63,12 @@ def constructChoreMessage(todays_people, member_dict):
 
 # calculates the correct loci based on the length of todays nicknames and the length of the chore strings
 def constructMentionsObject(todays_people):
-    mention_index1 = len(intro_string) + len(dishwasher_string) - 1
-    mention_index2 = mention_index1 + len(member_dict.get(todays_people[0])) + len(countertop_string) - 1
-    mention_index3 = mention_index2 + len(member_dict.get(todays_people[1])) + len(stovetop_string) - 1
-    firstLoci = [mention_index1, len(member_dict.get(todays_people[0]))]
-    secondLoci = [mention_index2, len(member_dict.get(todays_people[1]))]
-    thirdLoci = [mention_index3, len(member_dict.get(todays_people[2]))]
+    mention_index1 = len(intro_string) + len(dishwasher_string)
+    mention_index2 = mention_index1 + len(member_dict.get(todays_people[0])) + len(countertop_string)
+    mention_index3 = mention_index2 + len(member_dict.get(todays_people[1])) + len(stovetop_string)
+    firstLoci = [mention_index1 - 1, len(member_dict.get(todays_people[0]))]
+    secondLoci = [mention_index2 - 1, len(member_dict.get(todays_people[1]))]
+    thirdLoci = [mention_index3 - 1, len(member_dict.get(todays_people[2]))]
     return {'loci': [firstLoci, secondLoci, thirdLoci], 'type': 'mentions', 'user_ids': [str(todays_people[0]), \
      str(todays_people[1]), str(todays_people[2])]}
 
