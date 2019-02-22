@@ -3,12 +3,13 @@ import time
 import json
 import numpy
 import datetime
+from random import randint
 
 ### IMPORTANT VARIABLES AND CONSTANTS ###
 group_id = '34883130'
 access_token = '7bC53ZymUUULq74uIlnYHJ3WExGkGJMevOXGitY3'
-#bot_id = '66937b801033770130013711b2'
-bot_id = '08a9497a271a70057028cd3b55'
+bot_id = '66937b801033770130013711b2'
+#bot_id = '08a9497a271a70057028cd3b55'
 todays_people = None
 current_week = None
 choreMapping = numpy.zeros((3,7), int)
@@ -40,6 +41,13 @@ def createWeekMapping():
         whole_week[i] = whole_week[i].split()
         for j in range(len(whole_week[i])):
             choreMapping[i][j] = int(whole_week[i][j])
+
+def chooseClosingLine():
+    chore_lines = open('chore_lines.txt', 'r+')
+    all_lines = chore_lines.read().split('\n')
+    line = all_lines[randint(0, len(all_lines) - 1)]
+    chore_lines.close()
+    return '\n\n\"' + line + '\"'
 
 # starts a new chore week by shifting everybody to the left
 def shiftWeek():
@@ -89,6 +97,9 @@ current_week.close()
 
 # get the chore people for today
 todays_people = choreMapping[:,day_of_week]
+
+# pick a random quote for the end of the message
+ending_string = chooseClosingLine()
 
 # construct message
 chore_message = constructChoreMessage(todays_people, member_dict)
