@@ -23,6 +23,7 @@ ending_string = '\n\nThis has been your daily whore reminder.'
 request_url = 'https://api.groupme.com/v3/groups/' + group_id
 homies_group_info = requests.get(request_url, params = request_params).json()
 response = int(homies_group_info['meta']['code'])
+# sets nicknames to most recent set
 if(response < 400):
     the_homies = homies_group_info['response']['members']
     for homie in the_homies:
