@@ -25,10 +25,10 @@ request_url = 'https://api.groupme.com/v3/groups/' + group_id
 homies_group_info = requests.get(request_url, params = request_params).json()
 response = int(homies_group_info['meta']['code'])
 # sets nicknames to most recent set
-#if(response < 400):
-the_homies = homies_group_info['response']['members']
-for homie in the_homies:
-    member_dict[homie['user_id']] = homie['nickname']
+if(response < 400):
+    the_homies = homies_group_info['response']['members']
+    for homie in the_homies:
+        member_dict[int(homie['user_id'])] = homie['nickname']
 
 # request for bot test group, remove once migrated
 #group = requests.get('https://api.groupme.com/v3/groups/48409659', params = request_params).json()
