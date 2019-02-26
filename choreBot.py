@@ -3,7 +3,9 @@ import time
 import json
 import numpy
 import datetime
+import math
 from random import randint
+from dateutil import rrule
 
 ### IMPORTANT VARIABLES AND CONSTANTS ###
 group_id = '34883130'
@@ -51,18 +53,18 @@ def chooseClosingLine():
 
 # starts a new chore week by shifting everybody to the left
 def shiftWeek():
-    current_week.seek(0)
-    current_week.truncate()
-    for i in range(choreMapping.shape[0]):
-        for j in range(choreMapping.shape[1]):
-            id = choreMapping[i][j]
-            mem_index = member_array.index(id)
-            if mem_index < 7:
-                choreMapping[i][j] = member_array[mem_index + 1]
-            else:
-                choreMapping[i][j] = member_array[0]
-            current_week.write(str(choreMapping[i][j]) + ' ')
-        current_week.write('\n')
+    firstWeekStart = datetime.date(2019, 2, 18)
+    today = datetime.date.today()
+    weekDiff = int(math.floor((today - firstWeekStart).days / 7))
+    for _ in range(weekDiff):
+        for j in range(choreMapping.shape[0]):
+            for k in range(choreMapping.shape[1]):
+                id = choreMapping[j][k]
+                mem_index = member_array.index(id)
+                if mem_index < 7:
+                    choreMapping[j][k] = member_array[mem_index + 1]
+                else:
+                    choreMapping[j][k] = member_array[0]
 
 # accesses nicknames from todays people and returns the message for the bot to post. Chore strings are defined at the top of the file
 def constructChoreMessage(todays_people, member_dict):
@@ -88,9 +90,8 @@ createWeekMapping()
 
 day_of_week = datetime.datetime.today().weekday() # get the current weekday
 
-# Shift week if it's Sunday
-if (day_of_week == 0):
-    shiftWeek()
+# shift the chore mapping based on the number of weeks elapsed
+shiftWeek()
 
 # close file stream
 current_week.close()
