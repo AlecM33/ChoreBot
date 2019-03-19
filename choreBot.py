@@ -47,7 +47,7 @@ def createWeekMapping():
 def chooseClosingLine():
     chore_lines = open('chore_lines.txt', 'r+')
     all_lines = chore_lines.read().split('\n')
-    line = all_lines[randint(0, len(all_lines) - 1)]
+    line = all_lines[22]
     chore_lines.close()
     return '\n\n\"' + line + '\"'
 
